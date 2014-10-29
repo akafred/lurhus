@@ -67,3 +67,7 @@ In theory you should only ever need to use vagrant commands to update the virtua
 ```
 
 As long as you never tamper with the virtual machine manually you should be able to do `vagrant destroy && vagrant up` if anything misbehaves or you want to do a bigger upgrade. Of course this will loose any log persistent data you have collected (to be solved later).
+
+### Log access
+
+You can use the command `./show_logs.sh` to tail the openHAB logs.
