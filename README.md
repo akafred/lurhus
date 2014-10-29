@@ -54,6 +54,11 @@ I use [Ansible](http://docs.ansible.com/) to automate provisioning of my virtual
 
 After you are up and running, open a browser and point it to [openHAB http://localhost:8080/openhab.app](http://localhost:8080/openhab.app) or [HABmin http://localhost:8080/HABmin.app](http://localhost:8080/HABmin.app).
 
+
+## Operations
+
+### Deploying changes
+
 In theory you should only ever need to use vagrant commands to update the virtual machine:
 
 ```
