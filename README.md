@@ -25,14 +25,16 @@ I use [Ansible](http://docs.ansible.com/) to automate provisioning of my virtual
 
 ## Bootstrap and prereqs
 
-1. Install virtualbox and vagrant:
+1. Install virtualbox, vagrant and ansible:
     - Ubuntu:
-        * `sudo apt-get install virtualbox`
+        * `sudo apt-get install -y virtualbox ansible`
         * vagrant > 1.5 - install deb manually: https://www.vagrantup.com/downloads.html
     - OSX: We recommend using [homebrew](http://brew.sh/) and [homebrew cask](http://caskroom.io/), but you can install these manually if you prefer (see download links).
         * `brew cask install virtualbox` -- or [Virtualbox Downloads](https://www.virtualbox.org/wiki/Downloads)
         * `brew cask install vagrant` -- or [Vagrant Downloads](https://www.vagrantup.com/downloads)
+        * `brew install ansible` -- or ... hm ... build from source?
     - Windows:
+        * Start here - and make sure you can ansible in the door: [Installing Ansible (Windows)] (http://docs.ansible.com/intro_windows.html#installing-on-the-control-machine)
         * Download and install "VirtualBox platform package" for Window hosts: [Virtualbox Downloads](https://www.virtualbox.org/wiki/Downloads)
         * Download and install Vagrant for Windows: [Vagrant Downloads](https://www.vagrantup.com/downloads)
         * Reboot your machine.
