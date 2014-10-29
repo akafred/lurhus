@@ -50,9 +50,9 @@ I use [Ansible](http://docs.ansible.com/) to automate provisioning of my virtual
 2. Clone this repo from the command line (in a directory of your choice):
    ```git clone https://github.com/akafred/lurhus.git```
 3. `cd lurhus` into your cloned repo.
-4. From the command line run: `vagrant up` to bootstrap the environment.
+4. From the command line run: `vagrant up` to bootstrap the environment. Note! The repository contains file(s) encrypted using `ansible-vault` - in such files there are secrets - like netatmo binding keys etc. Without the passphrase to the encrypted files you cannot start the system - in other words you need to replace the files with your own encrypted files with your secrets - or remove the functionality.
 
-Open a browser and point it to [openHAB http://localhost:8080/openhab.app](http://localhost:8080/openhab.app) or [HABmin http://localhost:8080/HABmin.app](http://localhost:8080/HABmin.app).
+After you are up and running, open a browser and point it to [openHAB http://localhost:8080/openhab.app](http://localhost:8080/openhab.app) or [HABmin http://localhost:8080/HABmin.app](http://localhost:8080/HABmin.app).
 
 In theory you should only ever need to use vagrant commands to update the virtual machine:
 
