@@ -59,10 +59,10 @@
 - name: copy start.sh
   template: src=start.sh dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/start.sh mode=0752
 
-#- name: openHAB-jetty running?
-#  shell: ps aux | grep java | grep jetty
-#  register: openhab_running
-#  ignore_errors: True
+- name: stop openHAB-jetty
+  shell: lsof -i -P | grep "*:8080 (LISTEN)" | awk '{print $2}' | xargs kill && sleep 10
+  register: openhab_running
+  ignore_errors: True
 
 - name: start openHAB-jetty
   shell: cd {{ openhab_install_dir }}/runtime/{{openhab_version}}; nohup ./start.sh
