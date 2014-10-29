@@ -1,0 +1,24 @@
+
+- name: check if openHAB component is installed - {{component}}
+  shell: ls {{ openhab_install_dir }}/{{component}}/{{ openhab_version }}
+  ignore_errors: yes
+  register: openhab_ls
+
+- name: download openHAB {{component}}
+  get_url: >
+    url=https://github.com/openhab/openhab/releases/download/v{{openhab_version}}/distribution-{{openhab_version}}-{{component}}.zip
+    dest={{ ansible_env.HOME }}/openhab-{{component}}-v{{openhab_version}}.zip
+  when: openhab_ls.rc != 0
+
+- name: create openHAB {{component}} directory
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/{{component}}/{{openhab_version}}
+  when: openhab_ls.rc != 0
+
+- name: unzip openHAB {{component}} download
+  unarchive: >
+    src={{ ansible_env.HOME }}/openhab-{{component}}-v{{openhab_version}}.zip
+    dest={{ openhab_install_dir }}/{{component}}/{{openhab_version}}/
+    copy=no
+  when: openhab_ls.rc != 0

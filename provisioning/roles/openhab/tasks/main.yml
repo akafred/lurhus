@@ -1,0 +1,72 @@
+
+
+- name: install openHAB runtime
+  include: install_openhab_component.yml component=runtime
+
+- name: install openHAB addons
+  include: install_openhab_component.yml component=addons
+
+#- name: install openHAB designer-{{openhab_designer_platform}}
+#  include: install_openhab_component.yml component=designer-{{openhab_designer_platform}}
+
+- name: link bindings into runtime
+  file: >
+    state=link
+    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.binding.{{ item }}-{{openhab_version}}.jar
+    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.binding.{{ item }}-{{openhab_version}}.jar
+  with_items:
+    - netatmo
+    - rfxcom
+    - zwave
+
+- name: install HABmin
+  include: install_habmin.yml 
+
+#- name: link openHAB designer into application directory
+#  file: >
+#    state=link
+#    src="{{ openhab_install_dir }}/designer-{{openhab_designer_platform}}/{{openhab_version}}/openHAB-Designer"
+#    dest="{{ ansible_env.HOME }}/openHAB-Designer"
+
+- name: See if configurations is a directory (then we nuke it next)
+  shell: "[ -d {{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations ] && echo 'Directory' || echo ''"
+  register: is_directory
+
+- name: delete example config directory
+  file: path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations state=absent
+  when: (is_directory.stdout)
+
+- name: create config directory
+  file: state=directory path={{ ansible_env.HOME }}/configurations
+
+- name: link our config directory
+  file: >
+    state=link
+    force=yes
+    src={{ ansible_env.HOME }}/configurations
+    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations
+
+- name: sync setup into config
+  synchronize: src=../files/configurations dest={{ ansible_env.HOME }}
+
+- name: sync secret setup into config
+  template: src=configurations/openhab.cfg dest={{ ansible_env.HOME }}/configurations/openhab.cfg
+
+- name: netatmo -- ssl cert
+  shell: 'curl --output ca.pem https://www.startssl.com/certs/ca.pem && $(readlink -f /usr/bin/javac | sed "s:/bin/javac::")/bin/keytool -importcert -keystore $(readlink -f /usr/bin/javac | sed "s:/bin/javac::")/jre/lib/security/cacerts -alias StartCom-Root-CA -file ca.pem -storepass changeit -noprompt || true'
+  sudo: true
+
+- name: copy start.sh
+  template: src=start.sh dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/start.sh mode=0752
+
+#- name: openHAB-jetty running?
+#  shell: ps aux | grep java | grep jetty
+#  register: openhab_running
+#  ignore_errors: True
+
+- name: start openHAB-jetty
+  shell: cd {{ openhab_install_dir }}/runtime/{{openhab_version}}; nohup ./start.sh
+  ignore_errors: True
+  async: 31556926 # a year in seconds
+#  when: openhab_running|failed
+#  poll: 0

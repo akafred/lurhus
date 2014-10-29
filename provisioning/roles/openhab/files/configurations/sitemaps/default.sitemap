@@ -1,0 +1,44 @@
+sitemap default label="Main Menu"
+{
+	Frame  {
+		Switch item=Kjokken
+		Switch item=Kontoret
+		Switch item=Soverommet
+
+		Switch item=Panelovn_Stue_Switch 				
+		Text item=Panelovn_Stue_Power 				
+		Text item=Panelovn_Stue_Energy 				
+		Switch item=Oljeovn_Stue_Switch 
+        Text item=Oljeovn_Stue_Power   
+        Text item=Oljeovn_Stue_Energy
+        Switch item=Panelovn_Theos_Switch
+        Text item=Panelovn_Theos_Power	
+        Text item=Panelovn_Theos_Energy
+        Switch item=TV_Switch
+		Text item=TV_Power	
+        Text item=TV_Energy
+		Text item=sensor_1_temp
+		Text item=sensor_1_humidity
+		Text item=sensor_1_luminance
+		Text item=sensor_1_motion
+		Text item=sensor_1_battery
+		Text item=Netatmo_Outdoor_Temperature
+		Text item=Netatmo_Outdoor_Humidity
+		Text item=Netatmo_Indoor_Temperature
+		Text item=Netatmo_Indoor_Humidity
+		Text item=Netatmo_Indoor_Co2
+		Text item=Netatmo_Indoor_Pressure
+		Text item=Netatmo_Indoor_Noise
+		Text item=some_temp_sensor
+		Text item=moretemp
+		Text item=morehumidity
+		Text item=morehumiditystatus
+		Text item=morebatterylevel
+/*        Text item=ZwaveStatsSOF 			
+		Text item=ZwaveStatsACK 			
+		Text item=ZwaveStatsCAN 			
+		Text item=ZwaveStatsNAK 			
+		Text item=ZwaveStatsOOF 			
+		Text item=ZwaveStatsTimeout 			
+*/	}
+}

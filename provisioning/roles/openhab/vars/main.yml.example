@@ -1,0 +1,4 @@
+# these must be replaced by real values in vars/main.yml and encryptet with ansible-vault
+netatmo_clientid: 0123456789abcdef12345678
+netatmo_clientsecret: abCD1234abCD1234abCD1234c
+netatmo_refreshtoken: "0123456789abcdef12345678|0dc9321a2e08a2e0a37eceb741576647"

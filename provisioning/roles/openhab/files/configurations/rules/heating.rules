@@ -1,0 +1,45 @@
+rule "Switch off heating in the evening"
+	when
+		Time cron "0 0 23 ? * *" 
+	then {
+		sendCommand(Heating, OFF)
+		logInfo("org.openhab.rules", "Fyring skrudd av " + now)
+	}
+end
+
+rule "Switch off heating in the morning during the week"
+	when
+		Time cron "0 0 7 ? * MON-FRI"
+	then {
+		sendCommand(Heating, OFF)
+		postUpdate(push_message_text, "Heating switched off at " + now)
+	}
+end
+
+rule "Switch on heating early in morning"
+	when
+		Time cron "0 0 4 ? * MON-FRI"
+	then {
+		sendCommand(Panelovn_Theos_Switch, ON)
+		sendCommand(Kjokken, ON)
+		postUpdate(push_message_text, "Partial heating switched on at " + now)
+	}
+end
+
+rule "Switch on heating in the morning"
+	when
+		Time cron "0 0 7 ? * SAT-SUN"
+	then {
+		sendCommand(Heating, ON)
+		logInfo("org.openhab.rules", "Fyring skrudd på " + now)
+	}
+end
+
+rule "Switch on heating in the afternoon"
+	when
+		Time cron "0 0 12 ? * MON-FRI"
+	then {
+		sendCommand(Heating, ON)
+		logInfo("org.openhab.rules", "Fyring skrudd på " + now)
+	}
+end

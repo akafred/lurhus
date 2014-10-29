@@ -1,0 +1,38 @@
+
+- name: check if HABmin is installed
+  shell: ls {{ openhab_install_dir }}/runtime/{{ openhab_version }}/webapps/habmin/
+  ignore_errors: yes
+  register: habmin_ls
+
+- name: download HABmin
+  get_url: >
+    url=https://github.com/cdjackson/HABmin/releases/download/{{habmin_version}}/habmin.zip
+    dest={{ ansible_env.HOME }}/habmin-v{{habmin_version}}.zip
+  when: habmin_ls.rc != 0
+
+- name: create HABmin directory
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/habmin/{{ habmin_version }}
+  when: habmin_ls.rc != 0
+
+- name: unzip HABmin
+  unarchive: >
+    src={{ ansible_env.HOME }}/habmin-v{{habmin_version}}.zip
+    dest={{ openhab_install_dir }}/habmin/{{ habmin_version }}/
+    copy=no
+  when: habmin_ls.rc != 0
+
+- name: link habmin webapp
+  file: >
+    state=link
+    src={{ openhab_install_dir }}/habmin/{{ habmin_version }}/webapps/habmin
+    dest={{ openhab_install_dir }}/runtime/{{ openhab_version }}/webapps/habmin
+
+- name: link habmin bindings
+  file: >
+    state=link
+    src={{ openhab_install_dir }}/habmin/{{ habmin_version }}/addons/org.openhab.{{item}}-{{habmin_openhab_version}}.jar
+    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.{{item}}-{{ habmin_openhab_version }}.jar
+  with_items:
+    - "io.habmin"

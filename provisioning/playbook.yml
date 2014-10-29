@@ -1,0 +1,18 @@
+#
+# 	Hardware:
+#   	AeoTec Z-Stick Series 2 - with Silicon Labs CP2102 USB to UART Bridge VCP (Virtual Com Port)
+#       RFXCom Tranciever USB stick
+#       Netatmo
+#       4 Fibaro Wall plugs (Z-wave)
+#       Aeon 4in1 sensor
+#       3 Nexa wall plugs 
+#
+
+- hosts: all
+  vars:
+    - zwave_tty: ttyZWAVE
+    - rfxcom_tty: ttyRFXCOM
+  roles:
+    - java
+    - usb
+    - openhab
