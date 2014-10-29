@@ -1,6 +1,7 @@
 
 - name: install usbutils
   apt: name=usbutils state=present
+  sudo: true
 
 #- name: add vagrant to dialup-account
 #  user: name=vagrant groups=dialup
