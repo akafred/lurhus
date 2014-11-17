@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
   config.ssh.forward_agent = true
 
   config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "512"]
+    vb.customize ["modifyvm", :id, "--memory", "1024"]
     vb.customize ["modifyvm", :id, "--usb", "on"]
     vb.customize ["modifyvm", :id, "--usbehci", "off"]
     vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'Z-Stick S2', '--vendorid', '0x10c4', '--productid', '0xea60']
