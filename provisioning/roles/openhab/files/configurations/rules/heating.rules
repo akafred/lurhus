@@ -12,7 +12,8 @@ rule "Switch off heating in the morning during the week"
 		Time cron "0 0 7 ? * MON-FRI"
 	then {
 		sendCommand(Heating, OFF)
-		postUpdate(push_message_text, "Heating switched off at " + now)
+//		postUpdate(push_message_text, "Heating switched off at " + now)
+    logInfo("org.openhab.rules", "Heating switched off at " + now)
 	}
 end
 
@@ -22,7 +23,7 @@ rule "Switch on heating early in morning"
 	then {
 		sendCommand(Panelovn_Theos_Switch, ON)
 		sendCommand(Kjokken, ON)
-		postUpdate(push_message_text, "Partial heating switched on at " + now)
+		logInfo("org.openhab.rules", "Partial heating switched on at " + now)
 	}
 end
 
