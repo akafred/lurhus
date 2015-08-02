@@ -6,7 +6,7 @@
 
 - name: download openHAB {{component}}
   get_url: >
-    url=https://github.com/openhab/openhab/releases/download/v{{openhab_version}}/distribution-{{openhab_version}}-{{component}}.zip
+    url=https://bintray.com/artifact/download/openhab/bin/distribution-{{openhab_version}}-{{component}}.zip
     dest={{ ansible_env.HOME }}/openhab-{{component}}-v{{openhab_version}}.zip
   when: openhab_ls.rc != 0
 
