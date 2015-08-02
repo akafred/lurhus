@@ -1,5 +1,5 @@
 openhab_install_dir: "{{ ansible_env.HOME }}/opt/openhab"
-openhab_version: 1.6.1
+openhab_version: 1.7.0
 habmin_version: 0.1.3-snapshot
 habmin_openhab_version: 1.5.0-SNAPSHOT
 #openhab_designer_platform: linux64bit # win|linux|macosx64|linux64bit
