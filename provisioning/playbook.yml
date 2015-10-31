@@ -13,6 +13,7 @@
     - zwave_tty: ttyZWAVE
     - rfxcom_tty: ttyRFXCOM
   roles:
+    - localize
     - java
     - usb
     - openhab
