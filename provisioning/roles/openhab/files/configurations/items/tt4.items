@@ -1,34 +1,71 @@
 Group	All
-Group	Heating	(All)	
-Switch  Kjokken "Kjøkken" (Heating) { rfxcom=">12710454.1:LIGHTING2.AC:Command" }
-Switch  Kontoret "Kontorets ovn" (Heating)  { rfxcom=">12710454.2:LIGHTING2.AC:Command" }
-Switch  Soverommet "Soverommets ovn" (Heating)  { rfxcom=">12710454.3:LIGHTING2.AC:Command" }
-Switch	Panelovn_Stue_Switch	"Panelovn stue"	(Heating)		{ zwave="4:command=switch_binary" }
-Number	Panelovn_Stue_Power	"Panelovn stue power consumption [%.1f W]"	(Heating)		{ zwave="4:command=sensor_multilevel" }
-Number	Panelovn_Stue_Energy	"Panelovn stue total energy usage  [%.2f KWh]"	(Heating)		{ zwave="4:command=meter" }
-Switch	Oljeovn_Stue_Switch	"Oljeovn stue"	(Heating)		{ zwave="6:command=switch_binary" }
-Number	Oljeovn_Stue_Power	"Oljeovn stue power consumption [%.1f W]"	(Heating)		{ zwave="6:command=sensor_multilevel" }
-Number	Oljeovn_Stue_Energy	"Oljeovn stue total energy usage  [%.2f KWh]"	(Heating)		{ zwave="6:command=meter" }
-Switch	Panelovn_Theos_Switch	"Panelovn Theos"	(Heating)		{ zwave="7:command=switch_binary" }
-Number	Panelovn_Theos_Power	"Panelovn Theos power consumption [%.1f W]"	(Heating)		{ zwave="7:command=sensor_multilevel" }
-Number	Panelovn_Theos_Energy	"Panelovn Theos total energy usage  [%.2f KWh]"	(Heating)		{ zwave="7:command=meter" }
-Switch	TV_Switch	"TV"	(TV)		{ zwave="8:command=switch_binary" }
-Number	TV_Power	"TV power consumption [%.1f W]"	(TV)		{ zwave="8:command=sensor_multilevel" }
-Number	TV_Energy	"TV total energy usage  [%.2f KWh]"	(TV)		{ zwave="8:command=meter" }
-Group	Motion	(All)	
-Number	sensor_1_temp	"Temperature [%.1f °C]"	(Motion)		{ zwave="5:command=sensor_multilevel,sensor_type=1" }
-Number	sensor_1_humidity	"Humidity    [%.0f %%]"	(Motion)		{ zwave="5:command=sensor_multilevel,sensor_type=5" }
-Number	sensor_1_luminance	"Luminance    [%.0f Lux]"	(Motion)		{ zwave="5:command=sensor_multilevel,sensor_type=3" }
-Contact	sensor_1_motion	"sensor [MAP(motion.map):%s]"	(Motion)		{ zwave="5:command=sensor_binary,respond_to_basic=true" }
-Number	sensor_1_battery	"Battery [%s %%]"	(Motion)		{ zwave="5:command=battery" }
-Group	Temperature	(All)	
+Group	Heating	(All)
+Group   HeatingTheo (Heating)
+Group   HeatingStue (Heating)
+Group   HeatingKjokken (Heating)
+Group   HeatingKontor (Heating)
+Group   HeatingSoverom (Heating)
+Group	Power	(All)
+Group	Energy	(All)
+Group   TV (All)
+Group	Presence	(All)
+Group	PresenceDerived	(Presence)
+Group	PresenceSource	(Presence)
+Group   VAC (All)
+Group   Pressure (VAC)
+Group   Humidity (VAC)
+Group	Temperature	(VAC)
+Group   CO2 (VAC)
+Group   Noise (VAC)
+Group   Light (VAC)
+Group   Status (All)
+
+Switch  Kjokken "Kjøkken" <kitchen> (HeatingKjokken) { rfxcom=">12710454.1:LIGHTING2.AC:Command" }
+Switch  Kontoret "Kontorets ovn" <office> (HeatingKontor)  { rfxcom=">12710454.2:LIGHTING2.AC:Command" }
+Switch  Soverommet "Soverommets ovn" <bedroom> (HeatingSoverom)  { rfxcom=">12710454.3:LIGHTING2.AC:Command" }
+
+Switch	Panelovn_Stue_Switch	"Stue panelovn"	<sofa> (HeatingStue)		{ zwave="4:command=switch_binary" }
+Number	Panelovn_Stue_Power	"Stue panelovn effekt [%.1f W]"	<sofa> (Power)		{ zwave="4:command=sensor_multilevel" }
+Number	Panelovn_Stue_Energy	"Stue panelovn energiforbruk  [%.2f KWh]"	<sofa> (Energy)		{ zwave="4:command=meter" }
+
+Switch	Oljeovn_Stue_Switch	"Stue oljeovn"	<sofa> (HeatingStue)		{ zwave="6:command=switch_binary" }
+Number	Oljeovn_Stue_Power	"Stue oljeovn effekt [%.1f W]"	<sofa> (Power)		{ zwave="6:command=sensor_multilevel" }
+Number	Oljeovn_Stue_Energy	"Stue oljeovn energiforbruk  [%.2f KWh]"	<sofa> (Energy)		{ zwave="6:command=meter" }
+
+Switch	Panelovn_Theos_Switch	"Theos panelovn"	<attic> (HeatingTheo)		{ zwave="7:command=switch_binary" }
+Number	Panelovn_Theos_Power	"Theos panelovn effekt [%.1f W]"	<attic> (Power)		{ zwave="7:command=sensor_multilevel" }
+Number	Panelovn_Theos_Energy	"Theos panelovn energiforbruk  [%.2f KWh]"	<attic> (Energy)		{ zwave="7:command=meter" }
+
+Switch	TV_Switch	"TV"	<television> (TV)		{ zwave="8:command=switch_binary" }
+Number	TV_Power	"TV effekt [%.1f W]"	<television> (Power)		{ zwave="8:command=sensor_multilevel" }
+Number	TV_Energy	"TV energiforbruk  [%.2f KWh]"	<television> (Energy)		{ zwave="8:command=meter" }
+
+Contact	Multisensor_1_motion	"Gang bevegelse [MAP(motion.map):%s]"	<corridor> (PresenceSource)		{ zwave="5:command=sensor_binary,respond_to_basic=true" }
+Number	Multisensor_1_temp	"Gang temperatur [%.1f °C]"	<corridor> (Temperature)		{ zwave="5:command=sensor_multilevel,sensor_type=1" }
+Number	Multisensor_1_humidity	"Gang luftfuktighet    [%.0f %%]"	<corridor> (Humidity)		{ zwave="5:command=sensor_multilevel,sensor_type=5" }
+Number	Multisensor_1_luminance	"Gang lys    [%.0f Lux]"	<corridor> (Light)		{ zwave="5:command=sensor_multilevel,sensor_type=3" }
+Number	Multisensor_1_battery	"Multisensor batteri [%s %%]"	<corridor> (Status)		{ zwave="5:command=battery" }
+
+Number Netatmo_Outdoor_Temperature "Utetemperatur [%.1f °C]" <garden> (Temperature) {netatmo="70:ee:50:01:f9:e2#02:00:00:01:b5:28#Temperature"}
+Number Netatmo_Outdoor_Humidity "Ute luftfuktighet [%.1f %%]" <garden> (Humidity) {netatmo="70:ee:50:01:f9:e2#02:00:00:01:b5:28#Humidity"}
+
+Number Netatmo_Indoor_Temperature "Stue temperatur [%.1f °C]" <sofa> (Temperature) {netatmo="70:ee:50:01:f9:e2#Temperature"}
+Number Netatmo_Indoor_Humidity "Stue luftfuktighet [%.1f ]" <sofa> (Humidity) {netatmo="70:ee:50:01:f9:e2#Humidity"}
+Number Netatmo_Indoor_Co2 "Stue CO2 [%.1f ]" <sofa> (CO2) {netatmo="70:ee:50:01:f9:e2#Co2"}
+Number Netatmo_Indoor_Pressure "Lufttrykk [%.1f ]" <garden> (Pressure) {netatmo="70:ee:50:01:f9:e2#Pressure"}
+Number Netatmo_Indoor_Noise "Stue lyd [%.1f ]" <sofa> (Noise) {netatmo="70:ee:50:01:f9:e2#Noise"}
+
+Number Chart_Period "Grafperiode" <graph>
+
+/*
 Number	some_temp_sensor	"Temperature [%.1f °C]"	(Temperature)		{ rfxcom="<18433:Temperature" }
 Number	moretemp	"Temperature 2 [%.1f °C]"	{ rfxcom="<257:Temperature" }
 Number	morehumidity	"Humidity [%.0f %%]"	{ rfxcom="<257:Humidity" }
 String	morehumiditystatus	"Humidity Status [%s]"	{ rfxcom="<257:HumidityStatus" }
 Number	morebatterylevel	"Temp 2 Battery [%s %%]"	{ rfxcom="<257:BatteryLevel" }
+*/
 
-/* 
+/*
 Number ZwaveStatsSOF "Number Start of Frames[%s]" (ZwaveStats) {zwave="1:command=info,item=sof"}
 Number ZwaveStatsACK "Number of Acknowledgments [%s]" (ZwaveStats) {zwave="1:command=info,item=ack"}
 Number ZwaveStatsCAN "Number of CAN [%s]" (ZwaveStats) {zwave="1:command=info,item=can"}
@@ -38,15 +75,6 @@ Number ZwaveStatsTimeout "Number of Time-outs [%s]" (ZwaveStats) {zwave="1:comma
 String ZwaveNode01HomeID    "Home ID [%s]" (ZwaveStats) {zwave="1:command=info,item=home_id"}
 Number ZwaveNode01NetworkID "Node ID [%s]" (ZwaveStats) {zwave="1:command=info,item=node_id"}
 */
-
-Number Netatmo_Outdoor_Temperature "Outdoor temperature [%.1f °C]" {netatmo="70:ee:50:01:f9:e2#02:00:00:01:b5:28#Temperature"}
-Number Netatmo_Outdoor_Humidity "Outdoor humidity [%.1f %%]" {netatmo="70:ee:50:01:f9:e2#02:00:00:01:b5:28#Humidity"}
-
-Number Netatmo_Indoor_Temperature "Indoor Temperature [%.1f ]" {netatmo="70:ee:50:01:f9:e2#Temperature"}
-Number Netatmo_Indoor_Humidity "Indoor Humidity [%.1f ]" {netatmo="70:ee:50:01:f9:e2#Humidity"}
-Number Netatmo_Indoor_Co2 "Indoor Co2 [%.1f ]" {netatmo="70:ee:50:01:f9:e2#Co2"}
-Number Netatmo_Indoor_Pressure "Indoor Pressure [%.1f ]" {netatmo="70:ee:50:01:f9:e2#Pressure"}
-Number Netatmo_Indoor_Noise "Indoor Noise [%.1f ]" {netatmo="70:ee:50:01:f9:e2#Noise"}
 
 /*
 Number Netatmo_Outdoor_Temperature_Santa_pola "Outdoor temperature StP  [%.1f °C]" {netatmo="70:ee:50:01:ac:ac#02:00:00:01:a7:62#Temperature"}

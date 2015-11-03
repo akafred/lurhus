@@ -6,18 +6,21 @@
 - name: install openHAB addons
   include: install_openhab_component.yml component=addons
 
-#- name: install openHAB designer-{{openhab_designer_platform}}
-#  include: install_openhab_component.yml component=designer-{{openhab_designer_platform}}
+- name: install openHAB designer-{{openhab_designer_platform}}
+  include: install_openhab_component.yml component=designer-{{openhab_designer_platform}}
 
-- name: link bindings into runtime
+- name: link addons into runtime
   file: >
     state=link
-    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.binding.{{ item }}-{{openhab_version}}.jar
-    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.binding.{{ item }}-{{openhab_version}}.jar
+    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.{{ item }}-{{openhab_version}}.jar
+    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.{{ item }}-{{openhab_version}}.jar
   with_items:
-    - netatmo
-    - rfxcom
-    - zwave
+    - binding.netatmo
+    - binding.rfxcom
+    - binding.zwave
+    - binding.networkhealth
+    - persistence.rrd4j
+    - action.nma
 
 - name: install HABmin
   include: install_habmin.yml 
@@ -37,20 +40,23 @@
   when: (is_directory.stdout)
 
 - name: create config directory
-  file: state=directory path={{ ansible_env.HOME }}/configurations
+  file: state=directory path={{ openhab_config_dir }}
 
 - name: link our config directory
   file: >
     state=link
     force=yes
-    src={{ ansible_env.HOME }}/configurations
+    src={{ openhab_config_dir }}
     dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations
 
 - name: sync setup into config
-  synchronize: src=../files/configurations dest={{ ansible_env.HOME }}
+  synchronize: src=../files/configurations/ dest={{ openhab_config_dir }}
 
 - name: sync secret setup into config
-  template: src=configurations/openhab.cfg dest={{ ansible_env.HOME }}/configurations/openhab.cfg
+  template: src=configurations/{{ item }}.cfg dest={{ openhab_config_dir }}/{{ item }}.cfg
+  with_items:
+    - openhab_default
+    - users
 
 - name: netatmo -- ssl cert
   shell: 'curl --output ca.pem https://www.startssl.com/certs/ca.pem && $(readlink -f /usr/bin/javac | sed "s:/bin/javac::")/bin/keytool -importcert -keystore $(readlink -f /usr/bin/javac | sed "s:/bin/javac::")/jre/lib/security/cacerts -alias StartCom-Root-CA -file ca.pem -storepass changeit -noprompt || true'

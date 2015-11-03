@@ -2,9 +2,16 @@
 Strategies {
 	// for rrd charts, we need a cron strategy
 	everyMinute : "0 * * * * ?"
+	everyHour   : "0 0 * * * ?"
+	everyDay    : "0 0 0 * * ?"
+
+    default = everyChange
 }
 
 Items {
-	Heating* : strategy = everyChange, everyMinute, restoreOnStartup
-	
+	* : strategy = everyChange, restoreOnStartup
+	VAC* : strategy = everyMinute
+	Presence* : strategy = everyMinute
+	Power* : strategy = everyMinute
+	Energy* : strategy = everyMinute
 }

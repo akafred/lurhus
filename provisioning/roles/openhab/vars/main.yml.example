@@ -1,4 +1,8 @@
-# these must be replaced by real values in vars/main.yml and encryptet with ansible-vault
+# these must be replaced by real values in vars/main.yml and encrypted with ansible-vault
 netatmo_clientid: 0123456789abcdef12345678
 netatmo_clientsecret: abCD1234abCD1234abCD1234c
 netatmo_refreshtoken: "0123456789abcdef12345678|0dc9321a2e08a2e0a37eceb741576647"
+admin_user: admin
+admin_password: password
+notifymyandroid_apikey: cf069abcdad315f453bd9b0099b6b8577bd1827bbf847636a
+notifymyandroid_defaulturl: "http://your-openhab.example.com/openhab.app"

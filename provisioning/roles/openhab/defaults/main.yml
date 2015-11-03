@@ -1,4 +1,5 @@
 openhab_install_dir: "{{ ansible_env.HOME }}/opt/openhab"
+openhab_config_dir: "/vagrant/configurations"
 openhab_version: 1.7.1
 habmin_version: 0.1.3-snapshot
 habmin_openhab_version: 1.5.0-SNAPSHOT

@@ -1,46 +1,107 @@
-rule "Switch off heating in the evening"
-	when
-		Time cron "0 0 23 ? * *" 
-	then {
-		sendCommand(Heating, OFF)
-		logInfo("org.openhab.rules", "Fyring skrudd av " + now)
+
+rule "Switch on heating early in morning"
+when
+	Time cron "0 0 4 ? * MON-FRI"
+then
+	sendCommand(HeatingKjokken, ON)
+end
+
+rule "Switch on heating early in morning"
+when
+	Time cron "0 0 5 ? * MON-FRI"
+then
+	logInfo("org.openhab.rules", "Theouke " + Theouke.state + " Netatmo_Outdoor_Temperature.state " + Netatmo_Outdoor_Temperature.state)
+	if (Theouke.state == ON) {// && Netatmo_Outdoor_Temperature.state < 8) {
+		sendCommand(HeatingTheo, ON)
 	}
 end
 
 rule "Switch off heating in the morning during the week"
-	when
-		Time cron "0 0 7 ? * MON-FRI"
-	then {
-		sendCommand(Heating, OFF)
-//		postUpdate(push_message_text, "Heating switched off at " + now)
-    logInfo("org.openhab.rules", "Heating switched off at " + now)
-	}
+when
+	Time cron "0 0 7 ? * MON-FRI"
+then
+	sendCommand(Heating, OFF)
+    logInfo("org.openhab.rules", "Fyring skrudd av " + now)
 end
 
-rule "Switch on heating early in morning"
-	when
-		Time cron "0 0 4 ? * MON-FRI"
-	then {
-		sendCommand(Panelovn_Theos_Switch, ON)
-		sendCommand(Kjokken, ON)
-		logInfo("org.openhab.rules", "Partial heating switched on at " + now)
+
+rule "Switch on heating on the weekend"
+when
+	Time cron "0 0 7 ? * SAT-SUN"
+then
+	if (Theouke.state == ON) {
+		sendCommand(HeatingTheo, ON)
+		sendCommand(HeatingStue, ON)
 	}
+	sendCommand(HeatingKjokken, ON)
+	sendCommand(HeatingKontor, ON)
 end
 
-rule "Switch on heating in the morning"
-	when
-		Time cron "0 0 7 ? * SAT-SUN"
-	then {
-		sendCommand(Heating, ON)
-		logInfo("org.openhab.rules", "Fyring skrudd på " + now)
+rule "Switch on heating in bedroom if it is cold"
+when
+    Time cron "0 1 22 ? * *" or
+    Time cron "0 1 23 ? * *"  // FIX - because everything turns off at night
+then
+	if (Netatmo_Outdoor_Temperature.state < 5) {
+    	sendCommand(HeatingSoverom, ON)
+    }
+end
+
+rule "Switch off heating in bedroom"
+when
+    Time cron "0 0 6 ? * MON-FRI" or
+    Time cron "0 0 10 ? * SAT-SUN"
+then
+	sendCommand(HeatingSoverom, OFF)
+end
+
+rule "Switch on heating in the afternoon when Theo is home"
+when
+	Time cron "0 0 13 ? * MON,TUE,THU,FRI" or
+	Time cron "0 0 11 ? * WED"
+then
+	if (Theouke.state == ON) {
+		sendCommand(HeatingTheo, ON)
+		sendCommand(HeatingStue, ON)
+		sendCommand(HeatingKjokken, ON)
 	}
 end
 
 rule "Switch on heating in the afternoon"
-	when
-		Time cron "0 0 12 ? * MON-FRI"
-	then {
-		sendCommand(Heating, ON)
-		logInfo("org.openhab.rules", "Fyring skrudd på " + now)
+when
+	Time cron "0 0 15 ? * MON-FRI"
+then
+	sendCommand(HeatingStue, ON)
+	sendCommand(HeatingKjokken, ON)
+	sendCommand(HeatingKontor, ON)
+end
+
+rule "Gi beskjed om fyring på stua"
+when
+	Item HeatingStue changed from OFF to ON
+then
+	logInfo("org.openhab.rules", "Fyring skrudd på " + now)
+	notifyMyAndroid("Fyring", "Fyring skrudd på " + now)
+end
+
+
+rule "Switch off all heating in the evening"
+when
+	Time cron "0 0 23 ? * *"
+then
+	sendCommand(Heating, OFF)
+	logInfo("org.openhab.rules", "Fyring skrudd av " + now)
+end
+
+rule "Switch off heating earlier in the evening - or back on"
+when
+	Time cron "0 */10 20-22 ? * *"
+then
+	logInfo("heating", "Vurderer fyring på stua " + now)
+	if (Noen_Paa_Stua.state == OFF && HeatingStue.members.filter(s | s.state == ON).size > 0) {
+		sendCommand(HeatingStue, OFF)
+	} else if (Noen_Paa_Stua.state == ON && HeatingStue.members.filter(s | s.state == OFF).size > 0) {
+		sendCommand(HeatingStue, ON)
 	}
 end
+
