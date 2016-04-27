@@ -4,7 +4,7 @@ sitemap default label="TT4"
 		Text label="Oppvarming" icon="heating" {
 			Frame label="Grafer"
 			{
-				  Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker"]
+				  Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker", 6="2 mnd"]
 			}
 		    Frame label="Temperatur og effekt"
 		    {
@@ -13,11 +13,13 @@ sitemap default label="TT4"
 				  Chart item=Temperature period=D refresh=1800  visibility=[Chart_Period==3]
 				  Chart item=Temperature period=3D refresh=1800  visibility=[Chart_Period==4]
 				  Chart item=Temperature period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Temperature period=2M refresh=3600 visibility=[Chart_Period==6]
 				  Chart item=Power period=h refresh=180  visibility=[Chart_Period==1]
 				  Chart item=Power period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
 				  Chart item=Power period=D refresh=1800  visibility=[Chart_Period==3]
 				  Chart item=Power period=3D refresh=1800  visibility=[Chart_Period==4]
 				  Chart item=Power period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Power period=2M refresh=3600 visibility=[Chart_Period==6]
 			}
 			Frame label="Ute" icon="garden"
 			{
@@ -40,15 +42,52 @@ sitemap default label="TT4"
 				Switch item=Kontoret
 				Switch item=Soverommet
 			}
+			Frame label="Fyringsgrafer"
+			{
+		  		Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker", 6="2 mnd"]
+			}
+		    Frame label="Fyring"
+		    {
+				  Chart item=HeatingKjokken period=h refresh=180  visibility=[Chart_Period==1]
+				  Chart item=HeatingKjokken period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=HeatingKjokken period=D refresh=1800  visibility=[Chart_Period==3]
+				  Chart item=HeatingKjokken period=3D refresh=1800  visibility=[Chart_Period==4]
+				  Chart item=HeatingKjokken period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=HeatingKjokken period=2M refresh=3600 visibility=[Chart_Period==6]
+				  Chart item=HeatingSoverom period=h refresh=180  visibility=[Chart_Period==1]
+				  Chart item=HeatingSoverom period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=HeatingSoverom period=D refresh=1800  visibility=[Chart_Period==3]
+				  Chart item=HeatingSoverom period=3D refresh=1800  visibility=[Chart_Period==4]
+				  Chart item=HeatingSoverom period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=HeatingSoverom period=2M refresh=3600 visibility=[Chart_Period==6]
+				  Chart item=HeatingKontor period=h refresh=180  visibility=[Chart_Period==1]
+				  Chart item=HeatingKontor period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=HeatingKontor period=D refresh=1800  visibility=[Chart_Period==3]
+				  Chart item=HeatingKontor period=3D refresh=1800  visibility=[Chart_Period==4]
+				  Chart item=HeatingKontor period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=HeatingKontor period=2M refresh=3600 visibility=[Chart_Period==6]
+				  Chart item=HeatingStue period=h refresh=180  visibility=[Chart_Period==1]
+				  Chart item=HeatingStue period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=HeatingStue period=D refresh=1800  visibility=[Chart_Period==3]
+				  Chart item=HeatingStue period=3D refresh=1800  visibility=[Chart_Period==4]
+				  Chart item=HeatingStue period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=HeatingStue period=2M refresh=3600 visibility=[Chart_Period==6]
+				  Chart item=HeatingTheo period=h refresh=180  visibility=[Chart_Period==1]
+				  Chart item=HeatingTheo period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=HeatingTheo period=D refresh=1800  visibility=[Chart_Period==3]
+				  Chart item=HeatingTheo period=3D refresh=1800  visibility=[Chart_Period==4]
+				  Chart item=HeatingTheo period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=HeatingTheo period=2M refresh=3600 visibility=[Chart_Period==6]
+			}
 			Frame
 			{
-				Text item=Panelovn_Stue_Energy
+				Text item=Panelovn_Stue_Energy 				
 		        Text item=Oljeovn_Stue_Energy
 		        Text item=Panelovn_Theos_Energy
 				Text label="Grafer" icon="chart" {
 					Frame label="Grafer"
 					{
-				  		Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker"]
+				  		Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker", 6="2 mnd"]
 					}
 				    Frame label="Energi"
 				    {
@@ -57,13 +96,16 @@ sitemap default label="TT4"
 						  Chart item=Energy period=D refresh=1800  visibility=[Chart_Period==3]
 						  Chart item=Energy period=3D refresh=1800  visibility=[Chart_Period==4]
 						  Chart item=Energy period=2W refresh=3600 visibility=[Chart_Period==5]
+						  Chart item=Energy period=2M refresh=3600 visibility=[Chart_Period==6]
 					}
 				}
 			}
 		}
 		Text label="Presence" icon="parents"{
 			Frame {
-		        Switch item=Noen_Hjemme mappings=[ON="Ja", OFF="Nei"]
+		        Switch item=Bortreist mappings=[ON="Ja", OFF="Nei"]
+		        Switch item=Hjemmedag mappings=[ON="Ja", OFF="Nei"]
+				Switch item=Noen_Hjemme mappings=[ON="Ja", OFF="Nei"]
 				Switch item=Noen_Paa_Stua mappings=[ON="Ja", OFF="Nei"]
 	        }
 			Frame {
@@ -82,7 +124,7 @@ sitemap default label="TT4"
 			}
 			Frame label="Grafer"
 			{
-				  Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker"]
+				  Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker", 6="2 mnd"]
 			}
 			Frame label="Presence" {
 				  Chart item=PresenceDerived period=h refresh=180 visibility=[Chart_Period==1]
@@ -90,11 +132,13 @@ sitemap default label="TT4"
 				  Chart item=PresenceDerived period=D refresh=1800 visibility=[Chart_Period==3]
 				  Chart item=PresenceDerived period=3D refresh=1800 visibility=[Chart_Period==4]
 				  Chart item=PresenceDerived period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=PresenceDerived period=2M refresh=3600 visibility=[Chart_Period==6]
 				  Chart item=PresenceSource period=h refresh=180 visibility=[Chart_Period==1]
 				  Chart item=PresenceSource period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
 				  Chart item=PresenceSource period=D refresh=1800 visibility=[Chart_Period==3]
 				  Chart item=PresenceSource period=3D refresh=1800 visibility=[Chart_Period==4]
 				  Chart item=PresenceSource period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=PresenceSource period=2M refresh=3600 visibility=[Chart_Period==6]
 			}
 			Frame label="Stue" {
 				  Chart item=CO2 period=h refresh=180 visibility=[Chart_Period==1]
@@ -102,16 +146,19 @@ sitemap default label="TT4"
 				  Chart item=CO2 period=D refresh=1800 visibility=[Chart_Period==3]
 				  Chart item=CO2 period=3D refresh=1800 visibility=[Chart_Period==4]
 				  Chart item=CO2 period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=CO2 period=2M refresh=3600 visibility=[Chart_Period==6]
 				  Chart item=Noise period=h refresh=180 visibility=[Chart_Period==1]
 				  Chart item=Noise period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
 				  Chart item=Noise period=D refresh=1800 visibility=[Chart_Period==3]
 				  Chart item=Noise period=3D refresh=1800 visibility=[Chart_Period==4]
 				  Chart item=Noise period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Noise period=2M refresh=3600 visibility=[Chart_Period==6]
 				  Chart item=TV_Power period=h refresh=180 visibility=[Chart_Period==1]
 				  Chart item=TV_Power period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
 				  Chart item=TV_Power period=D refresh=1800 visibility=[Chart_Period==3]
 				  Chart item=TV_Power period=3D refresh=1800 visibility=[Chart_Period==4]
 				  Chart item=TV_Power period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=TV_Power period=2M refresh=3600 visibility=[Chart_Period==6]
 			}
 			Frame label="Gang" {
 				  Chart item=Light period=h refresh=180 visibility=[Chart_Period==1]
@@ -119,17 +166,19 @@ sitemap default label="TT4"
 				  Chart item=Light period=D refresh=1800 visibility=[Chart_Period==3]
 				  Chart item=Light period=3D refresh=1800 visibility=[Chart_Period==4]
 				  Chart item=Light period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Light period=2M refresh=3600 visibility=[Chart_Period==6]
 				  Chart item=Multisensor_1_motion period=h refresh=180 visibility=[Chart_Period==1]
 				  Chart item=Multisensor_1_motion period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
 				  Chart item=Multisensor_1_motion period=D refresh=1800 visibility=[Chart_Period==3]
 				  Chart item=Multisensor_1_motion period=3D refresh=1800 visibility=[Chart_Period==4]
 				  Chart item=Multisensor_1_motion period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Multisensor_1_motion period=2M refresh=3600 visibility=[Chart_Period==6]
 			}
 		}
 		Text label="Vær og inneklima" icon="climate" {
 			Frame label="Grafer"
 			{
-				  Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker"]
+				  Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker", 6="2 mnd"]
 			}
 			Frame label="Presence" {
 				  Chart item=Temperature period=h refresh=180 visibility=[Chart_Period==1]
@@ -137,16 +186,19 @@ sitemap default label="TT4"
 				  Chart item=Temperature period=D refresh=1800 visibility=[Chart_Period==3]
 				  Chart item=Temperature period=3D refresh=1800 visibility=[Chart_Period==4]
 				  Chart item=Temperature period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Temperature period=2M refresh=3600 visibility=[Chart_Period==6]
 				  Chart item=Humidity period=h refresh=180 visibility=[Chart_Period==1]
 				  Chart item=Humidity period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
 				  Chart item=Humidity period=D refresh=1800 visibility=[Chart_Period==3]
 				  Chart item=Humidity period=3D refresh=1800 visibility=[Chart_Period==4]
 				  Chart item=Humidity period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Humidity period=2M refresh=3600 visibility=[Chart_Period==6]
 				  Chart item=Pressure period=h refresh=180 visibility=[Chart_Period==1]
 				  Chart item=Pressure period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
 				  Chart item=Pressure period=D refresh=1800 visibility=[Chart_Period==3]
 				  Chart item=Pressure period=3D refresh=1800 visibility=[Chart_Period==4]
 				  Chart item=Pressure period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Pressure period=2M refresh=3600 visibility=[Chart_Period==6]
 			}
 			Frame {
 				Text item=Multisensor_1_temp
