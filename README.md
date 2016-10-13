@@ -13,7 +13,7 @@ I use [Ansible](http://docs.ansible.com/) to automate provisioning of my virtual
 ### Hardware:
   * Some machine to run Vagrant & virtualbox on - with two usb-slots available
   * AeoTec Z-Stick Series 2 - with Silicon Labs CP2102 USB to UART Bridge VCP (Virtual Com Port - USB Stick)
-  * RFXCom Tranciever USB stick 
+  * RFXCom Transceiver USB stick 
   * Netatmo
   * 4 Fibaro Wall plugs (Z-wave)
   * Aeon 4in1 sensor (Z-wave)
