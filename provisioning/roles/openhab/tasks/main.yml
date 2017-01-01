@@ -6,8 +6,8 @@
 - name: install openHAB addons
   include: install_openhab_component.yml component=addons
 
-- name: install openHAB designer-{{openhab_designer_platform}}
-  include: install_openhab_component.yml component=designer-{{openhab_designer_platform}}
+#- name: install openHAB designer-{{openhab_designer_platform}}
+# include: install_openhab_component.yml component=designer-{{openhab_designer_platform}}
 
 - name: link addons into runtime
   file: >
@@ -60,7 +60,7 @@
 
 - name: netatmo -- ssl cert
   shell: 'curl --output ca.pem https://www.startssl.com/certs/ca.pem && $(readlink -f /usr/bin/javac | sed "s:/bin/javac::")/bin/keytool -importcert -keystore $(readlink -f /usr/bin/javac | sed "s:/bin/javac::")/jre/lib/security/cacerts -alias StartCom-Root-CA -file ca.pem -storepass changeit -noprompt || true'
-  sudo: true
+  become: true
 
 - name: copy start.sh
   template: src=start.sh dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/start.sh mode=0752

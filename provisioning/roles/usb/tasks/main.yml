@@ -1,12 +1,12 @@
 
 - name: install usbutils
   apt: name=usbutils state=present
-  sudo: true
+  become: true
 
 #- name: add vagrant to dialup-account
 #  user: name=vagrant groups=dialup
 #  register: added_group
-#  sudo: true
+#  become: true
 
 #- name: issue newgroup
 #  cmd: newgroup dialup
@@ -15,4 +15,4 @@
 - name: give usb access to all users
   template: src=50-embedded_devices.rules dest=/etc/udev/rules.d/50-embedded_devices.rules mode=0644
   notify: Restart udev
-  sudo: true
+  become: true
