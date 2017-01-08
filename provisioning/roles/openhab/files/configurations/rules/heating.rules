@@ -74,6 +74,30 @@ then
 	}
 end
 
+rule "Switch off heating - warm enough - stue"
+when
+	Item Netatmo_Indoor_Temperature changed or
+	Item Netatmo_Outdoor_Temperature changed
+then
+	if (Netatmo_Indoor_Temperature.state > 20 && Netatmo_Outdoor_Temperature.state > 16) {
+		sendCommand(HeatingStue, OFF)
+	}
+end
+
+rule "Switch off heating - warm enough"
+when
+	Item Multisensor_1_temp changed or
+	Item Netatmo_Outdoor_Temperature changed
+then
+	if (Multisensor_1_temp.state > 21 && Netatmo_Outdoor_Temperature.state > 18) {
+		sendCommand(HeatingKjokken, OFF)
+		sendCommand(HeatingKontor, OFF)
+		sendCommand(HeatingTheo, OFF)
+		sendCommand(HeatingSoverom, OFF)
+	}
+end
+
+
 rule "Switch on heating on the weekend"
 when
 	Time cron "0 0 7 ? * SAT-SUN"

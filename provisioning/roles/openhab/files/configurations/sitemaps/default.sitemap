@@ -101,6 +101,44 @@ sitemap default label="TT4"
 				}
 			}
 		}
+		Text label="Vær og inneklima" icon="climate" {
+			Frame label="Grafer"
+			{
+				  Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker", 6="2 mnd"]
+			}
+			Frame label="Presence" {
+				  Chart item=Temperature period=h refresh=180 visibility=[Chart_Period==1]
+				  Chart item=Temperature period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=Temperature period=D refresh=1800 visibility=[Chart_Period==3]
+				  Chart item=Temperature period=3D refresh=1800 visibility=[Chart_Period==4]
+				  Chart item=Temperature period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Temperature period=2M refresh=3600 visibility=[Chart_Period==6]
+				  Chart item=Humidity period=h refresh=180 visibility=[Chart_Period==1]
+				  Chart item=Humidity period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=Humidity period=D refresh=1800 visibility=[Chart_Period==3]
+				  Chart item=Humidity period=3D refresh=1800 visibility=[Chart_Period==4]
+				  Chart item=Humidity period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Humidity period=2M refresh=3600 visibility=[Chart_Period==6]
+				  Chart item=Pressure period=h refresh=180 visibility=[Chart_Period==1]
+				  Chart item=Pressure period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=Pressure period=D refresh=1800 visibility=[Chart_Period==3]
+				  Chart item=Pressure period=3D refresh=1800 visibility=[Chart_Period==4]
+				  Chart item=Pressure period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=Pressure period=2M refresh=3600 visibility=[Chart_Period==6]
+			}
+			Frame {
+				Text item=Multisensor_1_temp
+				Text item=Multisensor_1_humidity
+				Text item=Netatmo_Indoor_Temperature
+				Text item=Netatmo_Indoor_Humidity
+			}
+			Frame {
+				Text item=Netatmo_Outdoor_Temperature
+				Text item=Netatmo_Outdoor_Humidity
+				Text item=Netatmo_Indoor_Pressure
+				Text item=Netatmo_Indoor_Co2
+			}
+		}
 		Text label="Presence" icon="parents"{
 			Frame {
 		        Switch item=Bortreist mappings=[ON="Ja", OFF="Nei"]
@@ -175,42 +213,46 @@ sitemap default label="TT4"
 				  Chart item=Multisensor_1_motion period=2M refresh=3600 visibility=[Chart_Period==6]
 			}
 		}
-		Text label="Vær og inneklima" icon="climate" {
+		Text label="Presence GA" icon="parents"{
+			Frame {
+		        Switch item=Kontaktet_GA mappings=[ON="Ja", OFF="Nei"]
+				Switch item=Noen_Paa_Stua_GA mappings=[ON="Ja", OFF="Nei"]
+	        }
+			Frame {
+				Text item=Netatmo_Indoor_Co2_GA
+				Text item=Netatmo_Indoor_Noise_GA
+			}
 			Frame label="Grafer"
 			{
 				  Switch item=Chart_Period mappings=[1="1 time", 2="4 timer", 3="1 dag", 4="3 dager", 5="2 uker", 6="2 mnd"]
 			}
 			Frame label="Presence" {
-				  Chart item=Temperature period=h refresh=180 visibility=[Chart_Period==1]
-				  Chart item=Temperature period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
-				  Chart item=Temperature period=D refresh=1800 visibility=[Chart_Period==3]
-				  Chart item=Temperature period=3D refresh=1800 visibility=[Chart_Period==4]
-				  Chart item=Temperature period=2W refresh=3600 visibility=[Chart_Period==5]
-				  Chart item=Temperature period=2M refresh=3600 visibility=[Chart_Period==6]
-				  Chart item=Humidity period=h refresh=180 visibility=[Chart_Period==1]
-				  Chart item=Humidity period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
-				  Chart item=Humidity period=D refresh=1800 visibility=[Chart_Period==3]
-				  Chart item=Humidity period=3D refresh=1800 visibility=[Chart_Period==4]
-				  Chart item=Humidity period=2W refresh=3600 visibility=[Chart_Period==5]
-				  Chart item=Humidity period=2M refresh=3600 visibility=[Chart_Period==6]
-				  Chart item=Pressure period=h refresh=180 visibility=[Chart_Period==1]
-				  Chart item=Pressure period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
-				  Chart item=Pressure period=D refresh=1800 visibility=[Chart_Period==3]
-				  Chart item=Pressure period=3D refresh=1800 visibility=[Chart_Period==4]
-				  Chart item=Pressure period=2W refresh=3600 visibility=[Chart_Period==5]
-				  Chart item=Pressure period=2M refresh=3600 visibility=[Chart_Period==6]
+				  Chart item=PresenceDerivedGA period=h refresh=180 visibility=[Chart_Period==1]
+				  Chart item=PresenceDerivedGA period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=PresenceDerivedGA period=D refresh=1800 visibility=[Chart_Period==3]
+				  Chart item=PresenceDerivedGA period=3D refresh=1800 visibility=[Chart_Period==4]
+				  Chart item=PresenceDerivedGA period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=PresenceDerivedGA period=2M refresh=3600 visibility=[Chart_Period==6]
+				  Chart item=PresenceGA period=h refresh=180 visibility=[Chart_Period==1]
+				  Chart item=PresenceGA period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=PresenceGA period=D refresh=1800 visibility=[Chart_Period==3]
+				  Chart item=PresenceGA period=3D refresh=1800 visibility=[Chart_Period==4]
+				  Chart item=PresenceGA period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=PresencegA period=2M refresh=3600 visibility=[Chart_Period==6]
 			}
-			Frame {
-				Text item=Multisensor_1_temp
-				Text item=Multisensor_1_humidity
-				Text item=Netatmo_Indoor_Temperature
-				Text item=Netatmo_Indoor_Humidity
-			}
-			Frame {
-				Text item=Netatmo_Outdoor_Temperature
-				Text item=Netatmo_Outdoor_Humidity
-				Text item=Netatmo_Indoor_Pressure
-				Text item=Netatmo_Indoor_Co2
+			Frame label="Stue" {
+				  Chart item=CO2GA period=h refresh=180 visibility=[Chart_Period==1]
+				  Chart item=CO2GA period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=CO2GA period=D refresh=1800 visibility=[Chart_Period==3]
+				  Chart item=CO2GA period=3D refresh=1800 visibility=[Chart_Period==4]
+				  Chart item=CO2GA period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=CO2GA period=2M refresh=3600 visibility=[Chart_Period==6]
+				  Chart item=NoiseGA period=h refresh=180 visibility=[Chart_Period==1]
+				  Chart item=NoiseGA period=4h refresh=300  visibility=[Chart_Period==2, Chart_Period=="Uninitialized"]
+				  Chart item=NoiseGA period=D refresh=1800 visibility=[Chart_Period==3]
+				  Chart item=NoiseGA period=3D refresh=1800 visibility=[Chart_Period==4]
+				  Chart item=NoiseGA period=2W refresh=3600 visibility=[Chart_Period==5]
+				  Chart item=NoiseGA period=2M refresh=3600 visibility=[Chart_Period==6]
 			}
 		}
 		Text label="Annet" icon="none" {

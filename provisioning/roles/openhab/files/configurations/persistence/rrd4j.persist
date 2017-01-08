@@ -11,7 +11,9 @@ Strategies {
 Items {
 	* : strategy = everyChange, restoreOnStartup
 	VAC* : strategy = everyMinute
+	VACGA* : strategy = everyMinute
 	Presence* : strategy = everyMinute
+	PresenceGA* : strategy = everyMinute
 	Heating* : strategy = everyMinute
 	Power* : strategy = everyMinute
 	Energy* : strategy = everyMinute

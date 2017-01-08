@@ -21,6 +21,16 @@ Group   Noise (VAC)
 Group   Light (VAC)
 Group   Status (All)
 
+Group	AllGA
+Group	PresenceGA	(AllGA)
+Group	PresenceDerivedGA	(PresenceGA)
+Group   VACGA (AllGA)
+Group   PressureGA (VACGA)
+Group   HumidityGA (VACGA)
+Group	TemperatureGA	(VACGA)
+Group   CO2GA (VACGA)
+Group   NoiseGA (VACGA)
+
 Switch  Kjokken "Kjøkken" <kitchen> (HeatingKjokken) { rfxcom=">12710454.1:LIGHTING2.AC:Command" }
 Switch  Kontoret "Kontorets ovn" <office> (HeatingKontor)  { rfxcom=">12710454.2:LIGHTING2.AC:Command" }
 Switch  Soverommet "Soverommets ovn" <bedroom> (HeatingSoverom)  { rfxcom=">12710454.3:LIGHTING2.AC:Command" }
@@ -77,7 +87,11 @@ String ZwaveNode01HomeID    "Home ID [%s]" (ZwaveStats) {zwave="1:command=info,i
 Number ZwaveNode01NetworkID "Node ID [%s]" (ZwaveStats) {zwave="1:command=info,item=node_id"}
 */
 
-/*
-Number Netatmo_Outdoor_Temperature_Santa_pola "Outdoor temperature StP  [%.1f °C]" {netatmo="70:ee:50:01:ac:ac#02:00:00:01:a7:62#Temperature"}
-Number Netatmo_Indoor_CO2_SantaPola "Carbon dioxide StP [%d ppm]" {netatmo="70:ee:50:01:ac:ac#Co2"}
-*/
+Number Netatmo_Outdoor_Temperature_GA "Outdoor temperature GA [%.1f °C]" (TemperatureGA) {netatmo="70:ee:50:01:ac:ac#02:00:00:01:a7:62#Temperature"}
+Number Netatmo_Outdoor_Humidity_GA "Ute luftfuktighet GA [%.1f %%]" <garden> (HumidityGA) {netatmo="70:ee:50:01:ac:ac#02:00:00:01:a7:62#Humidity"}
+
+Number Netatmo_Indoor_Temperature_GA "Stue temperatur GA [%.1f °C]" <sofa> (TemperatureGA) {netatmo="70:ee:50:01:ac:ac#Temperature"}
+Number Netatmo_Indoor_Humidity_GA "Stue luftfuktighet GA [%.1f ]" <sofa> (HumidityGA) {netatmo="70:ee:50:01:ac:ac#Humidity"}
+Number Netatmo_Indoor_Co2_GA "Stue CO2 GA [%.1f ]" <sofa> (CO2GA) {netatmo="70:ee:50:01:ac:ac#Co2"}
+Number Netatmo_Indoor_Pressure_GA "Lufttrykk GA [%.1f ]" <garden> (PressureGA) {netatmo="70:ee:50:01:ac:ac#Pressure"}
+Number Netatmo_Indoor_Noise_GA "Stue lyd GA [%.1f ]" <sofa> (NoiseGA) {netatmo="70:ee:50:01:ac:ac#Noise"}
