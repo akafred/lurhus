@@ -2,3 +2,5 @@
 configurations
 etc
 *.iml
+*.retry
+
