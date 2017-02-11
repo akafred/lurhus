@@ -1,12 +1,35 @@
+---
+- name: Prep locales for generation
+  become: true
+  lineinfile:
+    dest:  /etc/locale.gen
+    regexp: '^{{ item }}'
+    insertafter: '^# {{ item }}'
+    line: '{{ item }}'
+  with_items:
+    - en_US.UTF-8 UTF-8
+    - nb_NO.UTF-8 UTF-8
+  register: locale_prep
+
+- name: regenerate locales
+  become: true
+  when: locale_prep.changed
+  shell: /usr/sbin/locale-gen
+
 - name: set locale
+  become: true
   command: /usr/sbin/update-locale LANG={{ locale }} LC_ALL={{ locale }}
-  sudo: true
 
 - name: set /etc/localtime
+  become: true
   file: src=/usr/share/zoneinfo/{{ timezone }} dest=/etc/localtime state=link force=yes
-  sudo: true
 
 - name: set /etc/timezone
+  become: true
   template: src=etc/timezone dest=/etc/timezone
-  notify: update tzdata
-  sudo: true
+  register: tz
+
+- name: update tzdata
+  become: true
+  when: tz.changed
+  command: /usr/sbin/dpkg-reconfigure --frontend noninteractive tzdata

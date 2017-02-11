@@ -2,4 +2,4 @@
 - hosts: all
 
   roles:
-#    - localize
+    - localize
