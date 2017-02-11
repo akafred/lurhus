@@ -1,20 +1,31 @@
 
-  - name: Create java repo list
-    shell: echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" | tee /etc/apt/sources.list.d/webupd8team-java.list
+  - name: Add repo
+    apt_repository:
+      repo: deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
+      filename: webupd8team-java
+    register: repo_add
     become: true
 
   - name: Add repo key
-    command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+    apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: EEA14886
+    become: true
+
+  - name: Update cache
+    apt:
+      update_cache: yes
+    when: repo_add.changed
     become: true
 
   - name: Accept java license
-    shell: echo 'oracle-java7-installer shared/accepted-oracle-license-v1-1 select true' | debconf-set-selections
+    shell: echo 'oracle-java8-installer shared/accepted-oracle-license-v1-1 select true' | /usr/bin/debconf-set-selections
     become: true
 
-  - name: Update
-    command: apt-get update -y
-    become: true
-
-  - name: Install java 7
-    command: apt-get install oracle-java7-set-default -y
+  - name: Install or upgrade
+    apt:
+      name: oracle-java8-set-default
+      update_cache: yes
+      cache_valid_time: 3600
+      state: latest
     become: true
