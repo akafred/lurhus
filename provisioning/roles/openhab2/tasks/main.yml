@@ -26,6 +26,13 @@
     register: install
     become: true
 
+  - name: add openhab to dialout group
+    user:
+      name: openhab
+      groups: dialout
+    become: true
+    #when: install.changed
+
   - name: Restart on new install
     service:
       name: openhab2
