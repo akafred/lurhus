@@ -1,0 +1,38 @@
+---
+- hosts: all
+  tasks:
+
+  - name: Need rsync
+    apt:
+      name: rsync
+    become: true
+
+  - name: Stop service
+    service:
+      name: openhab2
+      state: stopped
+    become: true
+
+  - name: Name backup
+    command: date +%Y%m%d_%H%M%S
+    register: TIMESTAMP
+
+  - name: Backup config
+    synchronize:
+      mode: pull
+      src: /etc/openhab2/
+      dest: ../backups/{{ TIMESTAMP.stdout }}-conf
+    become: true
+
+  - name: Backup userdata
+    synchronize:
+      mode: pull
+      src: /var/lib/openhab2/
+      dest: ../backups/{{ TIMESTAMP.stdout }}-userdata
+    become: true
+
+  - name: Start service
+    service:
+      name: openhab2
+      state: started
+    become: true

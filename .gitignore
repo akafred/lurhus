@@ -3,4 +3,4 @@ configurations
 etc
 *.iml
 *.retry
-
+backups/

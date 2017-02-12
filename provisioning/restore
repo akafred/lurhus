@@ -1,0 +1,7 @@
+if [ -n "$1" ];
+then
+    ansible-playbook -v -i inventory restore.yml --extra-vars "TO_RESTORE=$1"
+else
+  echo "you must specify which backup to restore, e g: $0 `date +%Y%m%d_%H%M%S`";
+  exit 1;
+fi

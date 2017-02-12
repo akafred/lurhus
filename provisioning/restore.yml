@@ -1,0 +1,51 @@
+---
+- include: backup.yml
+
+- hosts: all
+  tasks:
+
+  - name: Need rsync
+    apt:
+      name: rsync
+    become: true
+
+  - name: Stop service
+    service:
+      name: openhab2
+      state: stopped
+    become: true
+
+  - name: Restore config
+    synchronize:
+      mode: push
+      src: ../backups/{{ TO_RESTORE }}-conf/
+      dest: /etc/openhab2
+      delete: yes
+    become: true
+
+  - name: Restore userdata
+    synchronize:
+      mode: push
+      src: ../backups/{{ TO_RESTORE }}-userdata/
+      dest: /var/lib/openhab2
+      delete: yes
+    become: true
+
+  - name: set permissions
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: openhab
+      group: openhab
+      mode: 0755
+      recurse: yes
+    become: true
+    with_items:
+      - /etc/openhab2
+      - /var/lib/openhab2
+
+  - name: Start service
+    service:
+      name: openhab2
+      state: started
+    become: true
