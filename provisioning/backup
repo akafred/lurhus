@@ -1,1 +1,8 @@
-ansible-playbook -v -i inventory backup.yml
+if [ -n "$1" ];
+then
+export BACKUP_COMMENT=-${1}
+else
+export BACKUP_COMMENT=""
+fi
+
+ansible-playbook -v -i inventory backup.yml --extra-vars "BACKUP_COMMENT=$BACKUP_COMMENT"

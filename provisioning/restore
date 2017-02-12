@@ -3,5 +3,8 @@ then
     ansible-playbook -v -i inventory restore.yml --extra-vars "TO_RESTORE=$1"
 else
   echo "you must specify which backup to restore, e g: $0 `date +%Y%m%d_%H%M%S`";
+  echo
+  echo Alternatives:
+  ls ../backups/ | grep conf | sed s/-conf//
   exit 1;
 fi
