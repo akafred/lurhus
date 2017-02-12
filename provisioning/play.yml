@@ -4,3 +4,4 @@
   roles:
     - localize
     - java
+    - openhab2

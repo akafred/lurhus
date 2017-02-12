@@ -1,0 +1,41 @@
+---
+  - name: Add repo key
+    apt_key:
+      url: "https://bintray.com/user/downloadSubjectPublicKey?username=openhab"
+    become: true
+
+  - name: Add repository
+    apt_repository:
+      repo: deb http://dl.bintray.com/openhab/apt-repo2 stable main
+      filename: openhab2
+    register: repo_add
+    become: true
+
+  - name: Update cache
+    apt:
+      update_cache: yes
+    when: repo_add.changed
+    become: true
+
+  - name: Install or upgrade
+    apt:
+      name: openhab2
+      update_cache: yes
+      cache_valid_time: 3600
+      state: latest
+    register: install
+    become: true
+
+  - name: Restart on new install
+    service:
+      name: openhab2
+      state: restarted
+    become: true
+    when: install.changed
+
+  - name: Make sure we are running
+    service:
+      name: openhab2
+      enabled: yes
+      state: started
+    become: true
