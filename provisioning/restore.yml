@@ -18,7 +18,7 @@
   - name: Restore config
     synchronize:
       mode: push
-      src: ../backups/{{ TO_RESTORE }}-conf/
+      src: ../backups/{{ TO_RESTORE }}/etc/
       dest: /etc/openhab2
       delete: yes
     become: true
@@ -26,7 +26,7 @@
   - name: Restore userdata
     synchronize:
       mode: push
-      src: ../backups/{{ TO_RESTORE }}-userdata/
+      src: ../backups/{{ TO_RESTORE }}/userdata/
       dest: /var/lib/openhab2
       delete: yes
     become: true

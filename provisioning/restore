@@ -5,6 +5,6 @@ else
   echo "you must specify which backup to restore, e g: $0 `date +%Y%m%d_%H%M%S`";
   echo
   echo Alternatives:
-  ls ../backups/ | grep conf | sed s/-conf//
+  ls ../backups/ | grep -v backup-repo
   exit 1;
 fi

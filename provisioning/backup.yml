@@ -17,18 +17,21 @@
     command: date +%Y%m%d_%H%M%S
     register: TIMESTAMP
 
+  - name: Create backup folder
+    local_action: command mkdir -p ../backups/{{ TIMESTAMP.stdout }}{{ BACKUP_COMMENT|default('') }}
+
   - name: Backup config
     synchronize:
       mode: pull
       src: /etc/openhab2/
-      dest: ../backups/{{ TIMESTAMP.stdout }}{{ BACKUP_COMMENT|default('') }}-conf
+      dest: ../backups/{{ TIMESTAMP.stdout }}{{ BACKUP_COMMENT|default('') }}/etc
     become: true
 
   - name: Backup userdata
     synchronize:
       mode: pull
       src: /var/lib/openhab2/
-      dest: ../backups/{{ TIMESTAMP.stdout }}{{ BACKUP_COMMENT|default('') }}-userdata
+      dest: ../backups/{{ TIMESTAMP.stdout }}{{ BACKUP_COMMENT|default('') }}/userdata
     become: true
 
   - name: Start service
